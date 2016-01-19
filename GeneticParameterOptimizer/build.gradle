@@ -1,0 +1,66 @@
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'eclipse'
+
+sourceCompatibility = 8
+version = '1.0'
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'Genetic Parameter Optimizer',
+                   'Implementation-Version': version
+    }
+}
+
+buildscript {
+  repositories {
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath 'com.palominolabs.gradle.task:gradle-git-clone-task:0.0.2'
+  }
+}
+
+repositories {
+    mavenCentral()
+}
+
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.+' 
+    compile files("$buildDir/classes/main")
+}
+
+
+test {
+    systemProperties 'property': 'value'
+}
+
+uploadArchives {
+    repositories {
+       flatDir {
+           dirs 'repos'
+       }
+    }
+}
+
+task cloneBlockbattleEngineRepo(type: com.palominolabs.gradle.task.git.clone.GitCloneTask) {
+  dir = file("$buildDir/blockbattle-engine")
+  uri = 'https://github.com/mtneug/blockbattle-engine'
+  treeish = 'origin/master'
+  reset = true
+}
+
+task compileBlockbattleEngine(dependsOn: 'cloneBlockbattleEngineRepo', type: JavaCompile) {
+  source = fileTree(dir: "$buildDir/blockbattle-engine/src", include: '**/*.java')
+  classpath = files("$buildDir/blockbattle-engine/src")
+  destinationDir = file("$buildDir/classes/main")
+  dependencyCacheDir = file("$buildDir/classes/main")
+}
+
+
+
+task runOptimizer(dependsOn: 'compileBlockbattleEngine', type: JavaExec){
+  main = 'de.unimuenster.wi.wwunderbot.parameters.startup.ParameterOptimizer'
+  classpath = sourceSets.main.runtimeClasspath
+}
