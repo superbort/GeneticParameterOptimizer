@@ -10,7 +10,7 @@ public class ParametersIndividual implements Individual, Parameters {
 
   public static final Individual.Generator<ParametersIndividual> GENERATOR = new Generator();
 
-  private static final short HEIGHT_WEIGHT = 10000;
+  private static final short HEIGHT_WEIGHT = -5000;
 
   private int fitness;
 
@@ -21,7 +21,7 @@ public class ParametersIndividual implements Individual, Parameters {
   private Random random;
 
   private ParametersIndividual(short bumpinessWeight, short completenessWeight, short holesWeight) {
-    this.fitness = 0;
+    this.fitness = 1000;
     this.bumpinessWeight = bumpinessWeight;
     this.completenessWeight = completenessWeight;
     this.holesWeight = holesWeight;
@@ -90,9 +90,9 @@ public class ParametersIndividual implements Individual, Parameters {
     @Override
     public ParametersIndividual generateRandom() {
       Random random = new Random();
-      short bumpinessWeight = (short) random.nextInt(Short.MAX_VALUE);
-      short completenessWeight = (short) random.nextInt(Short.MAX_VALUE);
-      short holesWeight = (short) random.nextInt(Short.MAX_VALUE);
+      short bumpinessWeight = (short) (random.nextInt((int) Short.MAX_VALUE * 2) - Short.MAX_VALUE);
+      short completenessWeight = (short) (random.nextInt((int) Short.MAX_VALUE * 2) - Short.MAX_VALUE);
+      short holesWeight = (short) (random.nextInt((int) Short.MAX_VALUE * 2) - Short.MAX_VALUE);
       return new ParametersIndividual(bumpinessWeight, completenessWeight, holesWeight);
     }
 

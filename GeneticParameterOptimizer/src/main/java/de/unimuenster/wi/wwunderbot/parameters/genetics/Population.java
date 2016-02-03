@@ -1,8 +1,11 @@
 package de.unimuenster.wi.wwunderbot.parameters.genetics;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import de.unimuenster.wi.wwunderbot.parameters.genetics.Individual.Generator;
@@ -64,6 +67,13 @@ public class Population<T extends Individual> implements Iterable<T>{
   @Override
   public Iterator<T> iterator() {
     return currentGeneration.iterator();
+  }
+  
+  public List<T> getFittest(int i){
+    ArrayList<T> result = new ArrayList<>(currentGeneration);
+    Collections.sort(result);
+    Collections.reverse(result);
+    return result.subList(0, i);
   }
 
 }

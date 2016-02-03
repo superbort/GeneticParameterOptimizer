@@ -1,5 +1,7 @@
 package de.unimuenster.wi.wwunderbot.parameters.startup;
 
+import java.util.List;
+
 import de.unimuenster.wi.wwunderbot.parameters.evaluation.DummyEvaluator;
 import de.unimuenster.wi.wwunderbot.parameters.genetics.Population;
 import de.unimuenster.wi.wwunderbot.parameters.genetics.Selector;
@@ -25,19 +27,26 @@ public class ParameterOptimizer {
   
   private void setUp(){
     evaluator = new DummyEvaluator();
-    population = Population.generateRandom(ParametersIndividual.GENERATOR, 1000);
+    population = Population.generateRandom(ParametersIndividual.GENERATOR, 100);
     dummySelector = new DummySelector<>();
     quantileSelector = new QuantileSelector<>();
   }
   
   private void run(){
-    for (int i = 0; i < 100; i++){
+    for (int i = 0; i < 50; i++){
+      System.out.println("Generation "+ i);
       //population.applyCrossover(quantileSelector);
       population.applyMutation(quantileSelector);
       population.nextGen();
       evaluator.evaluate(population);
       population.applySelector(quantileSelector);
     }
+    
+    List<ParametersIndividual> fittest = population.getFittest(10);
+    for (ParametersIndividual p: fittest){
+      System.out.println(p);
+    }
+    
   }
 
 }
