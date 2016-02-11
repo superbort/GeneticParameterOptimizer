@@ -2,7 +2,7 @@ package de.unimuenster.wi.wwunderbot.parameters.startup;
 
 import java.util.List;
 
-import de.unimuenster.wi.wwunderbot.parameters.evaluation.DummyEvaluator;
+import de.unimuenster.wi.wwunderbot.parameters.evaluation.EloEvaluator;
 import de.unimuenster.wi.wwunderbot.parameters.genetics.Population;
 import de.unimuenster.wi.wwunderbot.parameters.genetics.Selector;
 import de.unimuenster.wi.wwunderbot.parameters.individuals.ParametersIndividual;
@@ -14,7 +14,7 @@ public class ParameterOptimizer {
   private Population<ParametersIndividual> population;
   private Selector<ParametersIndividual> dummySelector; //TODO replace dummySelector with real ones
   private Selector<ParametersIndividual> quantileSelector;
-  private DummyEvaluator evaluator;
+  private EloEvaluator evaluator;
 
   public static void main(String[] args) {
     new ParameterOptimizer();
@@ -26,7 +26,7 @@ public class ParameterOptimizer {
   }
   
   private void setUp(){
-    evaluator = new DummyEvaluator();
+    evaluator = new EloEvaluator();
     population = Population.generateRandom(ParametersIndividual.GENERATOR, 100);
     dummySelector = new DummySelector<>();
     quantileSelector = new QuantileSelector<>();

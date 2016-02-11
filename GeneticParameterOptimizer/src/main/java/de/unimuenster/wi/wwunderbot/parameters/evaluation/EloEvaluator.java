@@ -7,7 +7,7 @@ import com.theaigames.blockbattle.ThreadedBlockbattle;
 import de.unimuenster.wi.wwunderbot.parameters.genetics.Population;
 import de.unimuenster.wi.wwunderbot.parameters.individuals.ParametersIndividual;
 
-public class DummyEvaluator {
+public class EloEvaluator {
   
   private final double k = 20.0;
 
