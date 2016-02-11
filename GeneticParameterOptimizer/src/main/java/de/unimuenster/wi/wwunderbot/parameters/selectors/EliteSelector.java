@@ -8,21 +8,21 @@ import java.util.List;
 import de.unimuenster.wi.wwunderbot.parameters.genetics.Individual;
 import de.unimuenster.wi.wwunderbot.parameters.genetics.Selector;
 
-public class QuantileSelector<T extends Individual> implements Selector<T> {
+/**
+ * Selects a constant number of individuals based on their fitness.
+ *
+ * @param <T> The type of individual
+ */
+public class EliteSelector<T extends Individual> implements Selector<T> {
   
-  
-  private final double p;
+  private final int size;
   
   /**
-   * Creates a p-Quantile selector.
-   * @param p Value between 0 and 1 to specify size of the quantile.
+   * Creates a new EliteSelector with the given size.
+   * @param eliteSize Size of the elite to select. Cannot be larger than the population.
    */
-  public QuantileSelector(double p) {
-    this.p = p;
-  } 
-  
-  public QuantileSelector() {
-    this(0.5);
+  public EliteSelector(int eliteSize) {
+    this.size = eliteSize;
   }
 
   @Override
@@ -30,7 +30,7 @@ public class QuantileSelector<T extends Individual> implements Selector<T> {
     List<T> list = new ArrayList<T>(input);
     Collections.sort(list);
     int end = list.size()-1;
-    int middle = end - (int) (list.size() * p);
+    int middle = end - this.size;
     return list.subList(middle, end);
   }
 
